@@ -7,7 +7,7 @@ import os
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.dirname(SCRIPT_DIR))
 
-from assets.modules import *
+from assets.buttonObjects import *
 
 s1 = Rectangle(720, 600, (60,60), col.white)
 surf1 = pygame.Surface((740,620))
@@ -47,6 +47,17 @@ def draw(space, rect, draw_options):
 
 def create_ball(space, radius, mass, pos):
     body = pymunk.Body()
+    body.position = pos
+    shape = pymunk.Circle(body, radius)
+    shape.mass = mass
+    shape.color = (255, 0, 0, 100)
+    shape.elasticity = 0
+    shape.friction = 50.0
+    space.add(body, shape)
+    return shape
+
+def create_ball_static(space, radius, mass, pos):
+    body = pymunk.Body(body_type=pymunk.Body.STATIC)
     body.position = pos
     shape = pymunk.Circle(body, radius)
     shape.mass = mass
