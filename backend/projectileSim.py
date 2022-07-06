@@ -56,17 +56,6 @@ def create_ball(space, radius, mass, pos):
     space.add(body, shape)
     return shape
 
-def create_ball_static(space, radius, mass, pos):
-    body = pymunk.Body(body_type=pymunk.Body.STATIC)
-    body.position = pos
-    shape = pymunk.Circle(body, radius)
-    shape.mass = mass
-    shape.color = (255, 0, 0, 100)
-    shape.elasticity = 0
-    shape.friction = 50.0
-    space.add(body, shape)
-    return shape
-
 def run(window,angleinput,velinput):
     run = True
     clock = pygame.time.Clock()
