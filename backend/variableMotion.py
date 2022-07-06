@@ -9,8 +9,7 @@ class Equation:
 
     def displacement(self, start, end):
         x = np.linspace(start,end)
-        y = self.a * (x**2) + self.b*(x) + self.c
-        fig = plt.figure(figsize = (10, 5))
+        y = int(self.a) * (x**2) + int(self.b)*(x) + int(self.c)
         plt.plot(x, y)
         plt.title("Displacement V/S Time Graph")
         plt.xlabel("Time")
@@ -18,11 +17,9 @@ class Equation:
 
     def velocity(self, start, end):
         x = np.linspace(start,end)
-        y = self.a * (x) * 2 + self.b 
-        fig = plt.figure(figsize = (10, 5))
+        y = int(self.a) * (x) * int(2) + int(self.b) 
         plt.plot(x, y)
         plt.title("Velocity V/S Time Graph")
-
         plt.xlabel("Time")
         plt.ylabel("Velocity")
 
