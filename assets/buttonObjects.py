@@ -1,4 +1,6 @@
 from assets.modules import *
+from assets.button import *
+from assets.rectangle import *
 
 button1 = Button('Moment & Forces',400,80,(440,320), col.darkpurple)
 button2 = Button('Kinematics',400,80,(440,440) ,col.darkpurple)
@@ -8,10 +10,10 @@ MomentButton = Button('Add a Hinge',400,80,(840,180), col.darkpurple)
 ForceButton = Button('Add a Force',400,80,(840,310), col.darkpurple)
 SolutionButton = Button('Calculate Solution',400,80,(840,440), col.darkpurple)
 
-CalcMomButton = Button('Plot Moment',400,80,(840,50), col.darkpurple)
+CalcMomButton = Button('Plot Bending Force',400,80,(840,50), col.darkpurple)
 CalcShearButton = Button('Plot Shear Forces',400,80,(840,180), col.darkpurple)
 CalcReactButton = Button('Plot Reaction Forces',400,80,(840,310), col.darkpurple)
-CalcDispButton = Button('Plot Displacement',400,80,(840,440), col.darkpurple)
+CalcDispButton = Button('Plot Axial Forces',400,80,(840,440), col.darkpurple)
 BackButton = Button('Go Back',400,80,(840,570), col.darkpurple, col.red)
 
 TextButton1 = Button('',150,50,(865,180),col.red,col.offwhite)
@@ -58,3 +60,87 @@ ProjectileHorizontal1 = Button('',400,50,(840,440),col.black,col.white, hover=Fa
 
 equation = pygame.image.load(r'assets/equation.png')
 equation = pygame.transform.scale(equation, (320, 60))
+
+rect1 = Rectangle(740,620,(50,50),col.white)
+rect2 = Rectangle(400,470,(840,50),col.white)
+
+def MomentsDefaultDraw():
+        ElementButton.draw()
+        MomentButton.draw()
+        ForceButton.draw()
+        SolutionButton.draw()
+        BackButton.draw()
+
+
+def MomentsForceDraw():
+            BackButton.draw()
+            rect2.draw()
+            TextButtonLarge.draw()
+            TextButtonLarge2.draw()
+            TextNew2.draw()
+            TextNew3.draw()
+            SubmitCor3.draw()
+
+def MomentsMomentDraw():
+            BackButton.draw()
+            rect2.draw()
+            TextButtonLarge.draw()
+            TextNew2.draw()
+            SubmitCor2.draw()
+
+
+def MomentElementDraw():
+            BackButton.draw()
+            rect2.draw()
+            TextButton1.draw()
+            TextButton2.draw()
+            TextButton3.draw()
+            TextButton4.draw()
+            TextNew.draw()
+            TextNew1.draw()
+            SubmitCor.draw()
+
+
+def SolveDraw():
+            CalcMomButton.draw()
+            CalcShearButton.draw()
+            CalcReactButton.draw()
+            CalcDispButton.draw()
+            BackButton.draw()
+
+def KinDefaultDraw():
+            ProjectileButton.draw()
+            VariableButton.draw()
+            ProjectileSimulateButton.draw()
+            BackButton.draw()
+
+
+def ProjectileSolutionDraw():
+
+                rect2.draw()
+                ProjectilePeriod.draw()
+                ProjectileHigh.draw()
+                ProjectileHorizontal.draw()
+                ProjectilePeriod1.draw()
+                ProjectileHigh1.draw()
+                ProjectileHorizontal1.draw()
+
+
+def ProjectileDefaultDraw():
+                BackButton.draw()
+                rect2.draw()
+                TextButtonLarge.draw()
+                TextButtonLarge2.draw()
+                ProjectileText1.draw()
+                ProjectileText2.draw()
+                KinematicsSubmit.draw()
+
+
+DisplacementButton = Button('Displacement',300,80,(890,100), col.darkpurple)
+VelocityButton = Button('Velocity',300,80,(890,230), col.darkpurple)
+AccelerationButton = Button('Acceleration',300,80,(890,360), col.darkpurple)
+
+def VariableMotion():
+    DisplacementButton.draw()
+    VelocityButton.draw()
+    AccelerationButton.draw()
