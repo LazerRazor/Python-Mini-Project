@@ -30,3 +30,11 @@ RR = 0
 Solution = False
 
 a, b, c = False, False, False
+
+workspacelength = 740
+workspacewidth = 620
+
+
+li = ['Go Back','X']
+workspacelength = 740
+workspacewidth = 620
