@@ -2,101 +2,105 @@ import pygame
 import pymunk
 import pymunk.pygame_util
 import math
-# Importing required modules.
+import sys
+import os
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(os.path.dirname(SCRIPT_DIR))
 
-pygame.init()
+from assets.modules import *
 
-WIDTH, HEIGHT = 1000, 750   # Setting window width and height.
-window = pygame.display.set_mode((WIDTH, HEIGHT))   # Creating window.
+s1 = Rectangle(720, 600, (60,60), col.white)
+surf1 = pygame.Surface((740,620))
+s = pygame.display.get_surface()
 
-def draw(space, window, draw_options):
-    '''Defines draw function which updates
-    pygame display repetitively.'''
-    window.fill("white")    # Makes complete window white in colour.
-    space.debug_draw(draw_options)
-    pygame.display.update()
+def create_walls(space):
+    rects1 = [
+        [(60, 360), (14, 600)],
+        [(780, 360), (14, 600)],
+        [(420, 60), (720, 14)],
+    ]
+    rects2 = [
+        [(420, 660), (720, 15)]
+    ]
 
-def calculate_distance(p1, p2):
-    '''Defines function to calculate distance
-    between initial and final mouse positions.'''
-    return math.sqrt((p2[1] - p1[1])**2 + (p2[0] - p1[0])**2)
-
-def calculate_angle(p1, p2):
-    '''Defines function to calculate angle
-    between initial and final mouse positions.'''
-    return math.atan2(p2[1] - p1[1], p2[0] - p1[0])
-
-def create_walls(space, width, height):
-    '''Function to create walls that keep the 
-    pymunk object from crossing out of the window.'''
-    rects = [
-        [(width/2, height-10), (width, 20)],
-        [(width/2, 10), (width, 20)],
-        [(10, height/2), (20, height)],
-        [(width-10, height/2), (20, height)]
-    ]   # Wall rects widths and heights.
-
-    for pos, size in rects: # Making wall rect objects static.
+    for pos, size in rects1:
         body = pymunk.Body(body_type=pymunk.Body.STATIC)
         body.position = pos
         shape = pymunk.Poly.create_box(body, size)
-        shape.elasticity = 0.4
-        shape.friction = 0.5
+        shape.elasticity = 0.0
+        shape.friction = 50.0
+        shape.color = (255,255,255,255)
+        space.add(body, shape)
+    for pos, size in rects2:
+        body = pymunk.Body(body_type=pymunk.Body.STATIC)
+        body.position = pos
+        shape = pymunk.Poly.create_box(body, size)
+        shape.elasticity = 0.0
+        shape.friction = 50.0
+        shape.color = (0,0,0,255)
         space.add(body, shape)
 
+def draw(space, rect, draw_options):
+    s.fill("white", s1.top_rect)
+    space.debug_draw(draw_options)
+    pygame.display.update()
+
 def create_ball(space, radius, mass, pos):
-    '''Function to create ball of given mass
-    and radius at mouse position.'''
     body = pymunk.Body()
     body.position = pos
     shape = pymunk.Circle(body, radius)
     shape.mass = mass
     shape.color = (255, 0, 0, 100)
-    shape.elasticity = 0.9
-    shape.friction = 0.4
+    shape.elasticity = 0
+    shape.friction = 50.0
     space.add(body, shape)
     return shape
 
-def run(window, width, height):
-    '''Run function to run the pymunk simulation
-    until pygame.quit event is encountered.'''
+def create_ball_static(space, radius, mass, pos):
+    body = pymunk.Body(body_type=pymunk.Body.STATIC)
+    body.position = pos
+    shape = pymunk.Circle(body, radius)
+    shape.mass = mass
+    shape.color = (255, 0, 0, 100)
+    shape.elasticity = 0
+    shape.friction = 50.0
+    space.add(body, shape)
+    return shape
+
+def run(window,angleinput,velinput):
     run = True
     clock = pygame.time.Clock()
-    fps = 60
+    fps = 120
     dt = 1/fps
 
     space = pymunk.Space()
-    space.gravity = (0, 981)    # Declaring gravity value
+    space.gravity = (0, 981)
 
-    walls = create_walls(space, WIDTH, HEIGHT)  # Creating walls
+    walls = create_walls(space)
 
     draw_options = pymunk.pygame_util.DrawOptions(window)
-
-    pressed_pos = None
-    ball = None
+    running = True
+    newinput = 0
 
     while run:
+        if BackButton.check_click():
+            run = False
+            break
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:   # Quitting while loop if 'X' clicked.
-                run = False
-                break
+            if event.type == pygame.QUIT:
+                pygame.quit()
 
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if not ball:
-                    pressed_pos = pygame.mouse.get_pos()
-                    ball = create_ball(space, 30, 10, pressed_pos)  # Creating ball at given position.
-                elif pressed_pos:
-                    ball.body.apply_impulse_at_local_point((10000,0),(0,0)) # Applying force to center of ball created.
-                    pressed_pos = None
-                else:
-                    space.remove(ball, ball.body)
-                    ball = None 
+            if (running==True):
+                radiusinput =  15
+                massinput = 20
+                ball = create_ball(space, radiusinput, massinput, (90,650))
+                newinput = 1
+                running = False
 
-        draw(space, window, draw_options)   # Updating pygame window 60 times each second.
+            elif newinput == 1:
+                ball.body.apply_impulse_at_local_point(((massinput*velinput*100*math.cos(math.radians(angleinput))),-(massinput*velinput*100*math.sin(math.radians(angleinput)))),(0,0))
+                newinput = 0
+
+        draw(space, surf1, draw_options)
         space.step(dt)
         clock.tick(fps)
-
-    pygame.quit()   # Quitting pygame program
-
-if __name__ == "__main__":
-    run(window, WIDTH, HEIGHT)
