@@ -3,17 +3,15 @@ Y = 720
 Menu = True
 Moment = False
 Kinematics = False
-
 MomDefault = True
 MomElement = False
 MomMoment = False
 MomForce = False
-
 KinDefault = True
 KinProjectile = False
+Solvee= False
 KinVariable = False
 KinProjectileSim = False
-
 KinVelocity = False
 KinRadMass = False
 Solve = False
@@ -28,13 +26,9 @@ ShowProjectile = False
 ShowMotion = False
 RR = 0
 Solution = False
-
 a, b, c = False, False, False
-
 workspacelength = 740
 workspacewidth = 620
-
-
 li = ['Go Back','X']
 workspacelength = 740
 workspacewidth = 620
