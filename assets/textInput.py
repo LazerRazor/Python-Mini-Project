@@ -14,6 +14,5 @@ def TextInput():
 
 def update():
     global user_text
-
     user_text = ''
 
