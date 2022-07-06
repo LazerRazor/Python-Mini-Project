@@ -282,3 +282,273 @@ while True:
                 ind^=1
                 BackButton.updateText(li[ind])
                 Solve, MomDefault = False, True
+
+    if Kinematics:
+
+        rect1.draw();
+  
+        if KinDefault:
+            count+=1
+            ProjectileButton.draw()
+            VariableButton.draw()
+            ProjectileSimulateButton.draw()
+            BackButton.draw()
+
+            if BackButton.check_click() and BackButton.text == 'Go Back' and count>30:
+                Menu, Kinematics = True, False
+
+            if ProjectileButton.check_click():
+                ind^=1
+                BackButton.updateText(li[ind])
+                KinDefault,KinProjectile,KinVariable,KinProjectileSim = False, True, False, False
+
+            if VariableButton.check_click():
+                ind^=1
+                BackButton.updateText(li[ind])
+                KinDefault,KinProjectile,KinVariable,KinProjectileSim = False, False, True, False
+
+            if ProjectileSimulateButton.check_click():
+                ind^=1
+                BackButton.updateText(li[ind])
+                KinDefault,KinProjectile,KinVariable,KinProjectileSim = False, False, False, True
+
+        if KinProjectile:
+
+            if ShowProjectile:
+                BackButton.draw()
+
+                fig = pylab.figure(figsize=[4, 4], # Inches
+                   dpi=1000,        # 100 dots per inch, so the resulting buffer is 400x400 pixels
+                   )
+                ax = fig.gca()
+                projectile.Path()
+                ProjectilePeriod1.updateText(f'{round(projectile.Period(),2)} seconds')
+                ProjectileHigh1.updateText(f'{round(projectile.HighestPoint(),2)} metres')
+                ProjectileHorizontal1.updateText(f'{round(projectile.Distance(),2)} metres')
+                canvas = agg.FigureCanvasAgg(fig)
+                canvas.draw()
+                renderer = canvas.get_renderer()
+                raw_data = renderer.tostring_rgb()
+                size = canvas.get_width_height()
+                surf = pygame.image.fromstring(raw_data, size, "RGB")
+                surf = pygame.transform.scale(surf, (700, 600))
+                Solution = True
+                Count+=1
+
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        pygame.quit()
+
+                if BackButton.check_click():
+                    count = 0
+                    Solution = False
+                    ShowProjectile = False
+                    user_text = ''
+
+
+            if Solution:
+                rect2.draw()
+                ProjectilePeriod.draw()
+                ProjectileHigh.draw()
+                ProjectileHorizontal.draw()
+                ProjectilePeriod1.draw()
+                ProjectileHigh1.draw()
+                ProjectileHorizontal1.draw()
+
+            else:
+                BackButton.draw()
+                rect2.draw()
+                TextButtonLarge.draw()
+                TextButtonLarge2.draw()
+                ProjectileText1.draw()
+                ProjectileText2.draw()
+                KinematicsSubmit.draw()
+
+            if(Count):
+                screen.blit(surf, (80,60))
+
+
+            for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        pygame.quit()
+                    if event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_BACKSPACE:
+                            user_text = user_text[:-1]
+                        else:
+                            user_text += event.unicode
+
+                    if NodeCheck:
+                        TextButtonLarge.updateText(user_text)
+
+                    else:
+                        TextButtonLarge2.updateText(user_text)
+            
+
+            if TextButtonLarge.check_click():
+                user_text = ''
+                NodeCheck = True
+
+            if TextButtonLarge2.check_click():
+                user_text = ''
+                NodeCheck = False
+
+            if KinematicsSubmit.check_click():
+                Theta = TextButtonLarge2.text
+                Initial = TextButtonLarge.text
+                projectile = Projectile(Theta, Initial)
+                ShowProjectile = True
+
+
+            if BackButton.check_click():
+                count = 0
+                ind^=1
+                BackButton.updateText(li[ind])
+                ShowProjectile = False
+                Solution = False
+                rect1.draw()
+                KinProjectile, KinDefault = False, True
+                user_text = ''
+
+        if KinVariable:
+
+            if ShowMotion:
+                BackButton.draw()
+                fig = pylab.figure(figsize=[4, 4], dpi=1000)
+                ax = fig.gca()
+                motion.acceleration(1,100)
+                canvas = agg.FigureCanvasAgg(fig)
+                canvas.draw()
+                renderer = canvas.get_renderer()
+                raw_data = renderer.tostring_rgb()
+                size = canvas.get_width_height()
+                surf = pygame.image.fromstring(raw_data, size, "RGB")
+                surf = pygame.transform.scale(surf, (700, 600))
+                Solution = True
+                Count+=1
+
+            else:
+                BackButton.draw()
+                rect2.draw()
+                VariableText1.draw()
+                VariableText2.draw()
+                VariableText3.draw()
+                VariableText4.draw()
+                VariableText5.draw()
+                VariableText6.draw()
+                KinematicsSubmit.draw()
+                screen.blit(equation,(870,60))
+
+            if Count:
+                screen.blit(surf, (80,60))
+
+
+            for event in pygame.event.get():
+                    if event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_BACKSPACE:
+                            user_text = user_text[:-1]
+                        else:
+                             user_text += event.unicode
+
+                    if a:
+                        VariableText4.updateText(user_text)
+
+                    elif b:
+                        VariableText5.updateText(user_text)
+
+                    elif c:
+                        VariableText6.updateText(user_text)
+
+            if VariableText4.check_click():
+                user_text = ''
+                a,b,c = True, False, False
+
+            if VariableText5.check_click():
+                user_text= ''
+                a,b,c = False, True, False
+
+            if VariableText6.check_click():
+                user_text = ''
+                a,b,c = False, False, True
+
+
+            if KinematicsSubmit.check_click():
+                a = VariableText4.text
+                b = VariableText5.text
+                c = VariableText6.text
+                motion = Equation(a,b,c)
+                ShowMotion = True
+
+            if BackButton.check_click():
+                count = 0
+                ind^=1
+                BackButton.updateText(li[ind])
+                ShowProjectile = False
+                KinVariable, KinDefault = False, True
+                user_text = ''
+    
+        if KinProjectileSim:
+            if Solution:
+                rect2.draw()
+                ProjectilePeriod.draw()
+                ProjectileHigh.draw()
+                ProjectileHorizontal.draw()
+                ProjectilePeriod1.updateText(f'{round(projectile.Period(),2)} seconds')
+                ProjectileHigh1.updateText(f'{round(projectile.HighestPoint(),2)} metres')
+                ProjectileHorizontal1.updateText(f'{round(projectile.Distance(),2)} metres')
+                ProjectilePeriod1.draw()
+                ProjectileHigh1.draw()
+                ProjectileHorizontal1.draw()
+                BackButton.draw()
+                run(screen,angleinput,velinput)
+
+            else:
+                BackButton.draw()
+                rect2.draw()
+                TextButtonLarge.draw()
+                TextButtonLarge2.draw()
+                ProjectileText1.draw()
+                ProjectileText2.draw()
+                KinematicsSubmit.draw()
+            space = pymunk.Space()
+            rect1.draw()
+
+            for event in pygame.event.get():
+                    if event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_BACKSPACE:
+                            user_text = user_text[:-1]
+                        else:
+                            user_text += event.unicode
+
+                    if NodeCheck:
+                        TextButtonLarge.updateText(user_text)
+
+                    else:
+                        TextButtonLarge2.updateText(user_text)
+            
+
+            if TextButtonLarge.check_click():
+                user_text = ''
+                NodeCheck = True
+
+            if TextButtonLarge2.check_click():
+                user_text = ''
+                NodeCheck = False
+
+            if KinematicsSubmit.check_click():
+                angleinput = float(TextButtonLarge2.text)
+                velinput = float(TextButtonLarge.text)
+                projectile = Projectile(angleinput, velinput)
+                Solution = True
+                # run(screen,angleinput,velinput)
+                
+
+
+            if BackButton.check_click():
+                count = 0
+                ind^=1
+                BackButton.updateText(li[ind])
+                Solution = False
+                KinProjectileSim, KinDefault = False, True
+                user_text = ''
+            
+    pygame.display.update()
