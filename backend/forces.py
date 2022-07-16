@@ -1,3 +1,4 @@
+# Modules that are being imported
 from anastruct import SystemElements
 import matplotlib.pyplot as plt
 ss = SystemElements()

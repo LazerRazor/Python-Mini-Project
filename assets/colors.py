@@ -1,3 +1,4 @@
+# Declaration of program color palette.
 white = (255, 255, 255)
 purple = (94, 33, 235)
 green = (136, 255, 85)

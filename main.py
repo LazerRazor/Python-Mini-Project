@@ -1,4 +1,4 @@
-#modules that are being imported
+# Modules that are being imported
 from assets.buttonObjects import *
 from assets.modules import *
 from assets.variables import *

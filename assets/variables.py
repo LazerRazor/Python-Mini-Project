@@ -1,17 +1,26 @@
+# Program window dimensions variables.
 X = 1280
 Y = 720
+
+# Main menu screen variables.
 Menu = True
 Moment = False
 Kinematics = False
+
+# Moments section default screen variables.
 MomDefault = True
 MomElement = False
 MomMoment = False
 MomForce = False
+
+# Kinematics section default screen variables.
 KinDefault = True
 KinProjectile = False
 Solvee= False
 KinVariable = False
 KinProjectileSim = False
+
+# Miscellaneous variables used in calculations and scene changes.
 KinVelocity = False
 KinRadMass = False
 Solve = False
@@ -27,8 +36,7 @@ ShowMotion = False
 RR = 0
 Solution = False
 a, b, c = False, False, False
-workspacelength = 740
-workspacewidth = 620
-li = ['Go Back','X']
+
+# Workspace dimension variables.
 workspacelength = 740
 workspacewidth = 620

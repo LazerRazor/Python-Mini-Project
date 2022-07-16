@@ -1,3 +1,4 @@
+# Modules that are being imported
 import pygame, assets.colors as col, assets.quit as Q , matplotlib
 from assets.button import Button 
 from assets.rectangle import Rectangle
