@@ -40,3 +40,6 @@ a, b, c = False, False, False
 # Workspace dimension variables.
 workspacelength = 740
 workspacewidth = 620
+
+# Back button variables.
+li = ['Go Back','X']
