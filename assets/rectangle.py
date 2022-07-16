@@ -13,3 +13,4 @@ class Rectangle:
 
     def draw(self):
         pygame.draw.rect(WIN,self.top_color,self.top_rect,border_radius = 20)
+        

@@ -26,3 +26,8 @@ class Projectile:
 
     def Distance(self):
         return self.initialVel**2 * math.sin(2*self.angle)/(9.8)
+
+        
+
+
+    
